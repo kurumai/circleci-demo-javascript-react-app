@@ -1,37 +1,50 @@
 version: 2 # use CircleCI 2.0
 jobs:
-  build:
+  dependencies:
     docker:
       - image: circleci/node:12
     steps:
       - checkout # special step to check out source code to working directory
-
       - restore_cache: # special step to restore the dependency cache
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           keys: 
             - v1-repo-{{ checksum "package-lock.json" }}
-
       - run:
           name: Install dependencies with NPM
           command: npm install # replace with `yarn install` if using yarn
-
       - save_cache: # special step to save the dependency cache
           key: v1-repo-{{ checksum "package-lock.json" }}
           paths:
             - "node_modules"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - "node_modules"
 
+  lint:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
       - run:
           name: Run lint
           command: npm run lint
 
+  unit_test:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
       - run:
           name: Run tests
           # Runs jest with "--maxWorkers=2" argument to avoid OOM issues
           command: npm test # replace with `yarn test` if using yarn
-
       - store_artifacts: 
           path: test-results
-
       - store_test_results:
           path: test-results
 
@@ -39,4 +52,10 @@ workflows:
   version: 2
   Build and Test:
     jobs:
-      - build
+      - dependencies
+      - lint
+          requires:
+            - dependencies
+      - unit_test
+          requires:
+            - dependencies
