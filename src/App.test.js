@@ -7,3 +7,7 @@ it('renders without crashing', () => {
   ReactDOM.render(<App />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
+
+test('header title', () => {
+  expect((new App).title).toBe('"Baby Hippo Gram"')
+})

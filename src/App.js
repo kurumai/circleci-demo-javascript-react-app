@@ -6,12 +6,11 @@ import Header from './Componets/Header';
 import Container from './Componets/Container';
 import Card from './Componets/Card';
 
-
 class App extends Component {
   render() {
     return (
       <Layout>
-        <Header title="Baby Hippo Gram"/>
+        <Header title={ this.title }/>
         <Container>
           <Card cards={ this.state.cards } />
         </Container>
@@ -19,11 +18,15 @@ class App extends Component {
     );
   }
 
+  title = '"Baby Hippo Gram"';
+
   state = {
       cards: []
   };
 
   componentDidMount() {
+    // https://www.reddit.com/r/babyhippos/hot/.json?count=20
+    // https://www.reddit.com/r/NationalPark/hot/.json?count=20
       fetch('https://www.reddit.com/r/babyhippos/hot/.json?count=20')
       .then(res => res.json())
       .then((data) => {
