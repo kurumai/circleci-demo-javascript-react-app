@@ -2,7 +2,7 @@ version: 2 # use CircleCI 2.0
 jobs:
   build:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:12
     steps:
       - checkout # special step to check out source code to working directory
 
@@ -19,6 +19,10 @@ jobs:
           key: v1-repo-{{ checksum "package-lock.json" }}
           paths:
             - "node_modules"
+
+      - run:
+          name: Run lint
+          command: npm run lint
 
       - run:
           name: Run tests
