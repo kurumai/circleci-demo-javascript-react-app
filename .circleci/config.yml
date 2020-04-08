@@ -32,6 +32,17 @@ jobs:
           name: Run lint
           command: npm run lint
 
+  deploy:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Deploy to Heroku
+          command: 
+
   unit_test:
     docker:
       - image: circleci/node:12

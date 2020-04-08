@@ -11,3 +11,4 @@ it('renders without crashing', () => {
 test('header title', () => {
   expect((new App).title).toBe('"Baby Hippo Gram"')
 })
+
