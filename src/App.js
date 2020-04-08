@@ -18,7 +18,7 @@ class App extends Component {
     );
   }
 
-  title = '"Baby Hippo Gram222222"';
+  title = '"Baby Hippo Gram"';
 
   state = {
       cards: []
