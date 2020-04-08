@@ -15,9 +15,11 @@ class App extends Component {
           <Card cards={ this.state.cards } />
         </Container>
       </Layout>
-    );
+    );;
   }
 
+  // Baby Hippo Gram
+  // National Park Gram
   title = '"Baby Hippo Gram"';
 
   state = {
