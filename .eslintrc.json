@@ -1,7 +1,10 @@
 {
     "env": {
+        "serviceworker": true,
+        "node": true,
         "browser": true,
-        "es6": true
+        "es6": true,
+        "jest/globals": true
     },
     "settings": {
         "react": {
@@ -25,7 +28,8 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "jest"
     ],
     "rules": {
     }
