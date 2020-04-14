@@ -86,6 +86,7 @@ workflows:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           region: AWS_REGION
           repo: noboru-test
+          use-docker-layer-caching: true
           filters:
             branches:
               only: dockerize
