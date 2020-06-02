@@ -88,7 +88,7 @@ workflows:
           repo: noboru-test
           executor:
             name: aws-ecr/default
-            use-docker-layer-caching: false
+            use-docker-layer-caching: true
           filters:
             branches:
               only: dockerize
