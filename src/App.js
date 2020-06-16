@@ -5,6 +5,7 @@ import Layout from './Componets/Layout';
 import Header from './Componets/Header';
 import Container from './Componets/Container';
 import Card from './Componets/Card';
+import MemLeak from './Componets/MemLeak';
 
 class App extends Component {
   render() {
@@ -20,7 +21,7 @@ class App extends Component {
 
   // Baby Hippo Gram
   // National Park Gram
-  title = '"National Park Gram"';
+  title = '"Baby Hippo Gram"';
 
   state = {
       cards: []
@@ -29,7 +30,7 @@ class App extends Component {
   componentDidMount() {
     // https://www.reddit.com/r/babyhippos/hot/.json?count=20
     // https://www.reddit.com/r/NationalPark/hot/.json?count=20
-      fetch('https://www.reddit.com/r/NationalPark/hot/.json?count=20')
+      fetch('https://www.reddit.com/r/babyhippos/hot/.json?count=20')
       .then(res => res.json())
       .then((data) => {
           console.log(data.data.children);
