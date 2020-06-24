@@ -71,7 +71,7 @@ jobs:
       - run:
           name: Deploy to EC2
           command: |
-            scp ./build.tar.gz ubuntu@${EC2_FQDN}:
+            scp -oStrictHostKeyChecking=no　./build.tar.gz ubuntu@${EC2_FQDN}:
             ssh ubuntu@${EC2_FQDN} rm -rf /var/app/build
             ssh ubuntu@${EC2_FQDN} tar -xvzf build.tar.gz -C /var/app
 
@@ -93,5 +93,4 @@ workflows:
           requires:
             - lint
             - unit_test
-          
           
