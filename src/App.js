@@ -20,7 +20,7 @@ class App extends Component {
 
   // Baby Hippo Gram
   // National Park Gram
-  title = '"Baby Hippo Gram"';
+  title = '"National Park Gram"';
 
   state = {
       cards: []
@@ -29,7 +29,7 @@ class App extends Component {
   componentDidMount() {
     // https://www.reddit.com/r/babyhippos/hot/.json?count=20
     // https://www.reddit.com/r/NationalPark/hot/.json?count=20
-      fetch('https://www.reddit.com/r/babyhippos/hot/.json?count=20')
+      fetch('https://www.reddit.com/r/NationalPark/hot/.json?count=20')
       .then(res => res.json())
       .then((data) => {
           console.log(data.data.children);
