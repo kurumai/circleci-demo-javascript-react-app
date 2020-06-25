@@ -33,6 +33,7 @@ jobs:
           command: npm run lint
 
   unit_test:
+    resource_class: xlarge
     docker:
       - image: circleci/node:12
     steps:
