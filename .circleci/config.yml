@@ -97,7 +97,7 @@ workflows:
               - lint
               - unit_test
       - aws-ecs/deploy-service-update:
-          family: 'noboru-demo-react-service'
+          family: 'noboru-demo-react'
           cluster-name: 'noboru-demo-php'
           container-image-name-updates: 'container=circleci-demo-javascript-react-app,tag=latest'
           requires:
