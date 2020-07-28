@@ -65,7 +65,7 @@ jobs:
 
 workflows:
   version: 2
-  Build and Test:
+  service_update:
     jobs:
       - dependencies
       - lint:
@@ -87,7 +87,6 @@ workflows:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           region: AWS_REGION
           repo: circleci-demo-javascript-react-app
-          tag: "${CIRCLE_SHA1}"
           executor:
             name: aws-ecr/default
             use-docker-layer-caching: true
@@ -98,8 +97,8 @@ workflows:
               - lint
               - unit_test
       - aws-ecs/deploy-service-update:
-          requires:
-            - aws-ecr/build-and-push-image
           family: 'noboru-demo-react-service'
           cluster-name: 'noboru-demo-php'
-          container-image-name-updates: 'container=noboru-demo-php-service,tag=${CIRCLE_SHA1}'
+          container-image-name-updates: 'container=circleci-demo-javascript-react-app,tag=latest'
+          requires:
+            - aws-ecr/build-and-push-image
