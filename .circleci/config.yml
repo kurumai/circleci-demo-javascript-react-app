@@ -94,12 +94,10 @@ workflows:
           requires:
               - lint
               - unit_test
-      - aws-ecs/deploy-service-update:
-          family: 'noboru-demo-react'
-          cluster-name: 'noboru-demo-php'
-          service-name: 'noboru-demo-react-service'
-          container-image-name-updates: 'container=web,tag=latest'
-          force-new-deployment: true
+      - aws-ecs/run-task:
+          task-definition: 'family:noboru-demo-react'
+          cluster: 'noboru-demo-php'
+          launch-type: 'EC2'
           requires:
             - aws-ecr/build-and-push-image
 
