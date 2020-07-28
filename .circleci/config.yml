@@ -95,7 +95,7 @@ workflows:
               - lint
               - unit_test
       - aws-ecs/run-task:
-          task-definition: 'family:noboru-demo-react'
+          task-definition: 'noboru-demo-react'
           cluster: 'noboru-demo-php'
           launch-type: 'EC2'
           requires:
