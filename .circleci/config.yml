@@ -85,7 +85,7 @@ workflows:
           account-url: AWS_ECR_ACCOUNT_URL
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          region: ${AWS_REGION}
+          region: AWS_REGION
           repo: circleci-demo-javascript-react-app
           tag: "${CIRCLE_SHA1}"
           executor:
