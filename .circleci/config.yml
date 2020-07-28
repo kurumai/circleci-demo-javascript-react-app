@@ -99,6 +99,6 @@ workflows:
       - aws-ecs/deploy-service-update:
           family: 'noboru-demo-react'
           cluster-name: 'noboru-demo-php'
-          container-image-name-updates: 'container=circleci-demo-javascript-react-app,tag=latest'
+          container-image-name-updates: 'container=web,tag=latest'
           requires:
             - aws-ecr/build-and-push-image
