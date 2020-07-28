@@ -98,6 +98,7 @@ workflows:
           task-definition: 'noboru-demo-react'
           cluster: 'noboru-demo-php'
           launch-type: 'EC2'
+          awsvpc: false
           requires:
             - aws-ecr/build-and-push-image
 
