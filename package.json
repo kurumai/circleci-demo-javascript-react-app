@@ -9,7 +9,7 @@
     "serve": "^11.3.2"
   },
   "scripts": {
-    "start": "GENERATE_SOURCEMAP=false react-scripts build --production && serve",
+    "start": "GENERATE_SOURCEMAP=false react-scripts build --production && serve -s build -l 5000",
     "build": "react-scripts build",
     "test": "react-scripts test --maxWorkers=2 --ci --coverage --reporters=default --reporters=jest-junit",
     "eject": "react-scripts eject",
