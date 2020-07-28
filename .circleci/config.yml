@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.8.2
+  aws-ecs: circleci/aws-ecs@1.2.0
 
 jobs:
   dependencies:
@@ -84,8 +85,9 @@ workflows:
           account-url: AWS_ECR_ACCOUNT_URL
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          region: AWS_REGION
+          region: ${AWS_REGION}
           repo: circleci-demo-javascript-react-app
+          tag: "${CIRCLE_SHA1}"
           executor:
             name: aws-ecr/default
             use-docker-layer-caching: true
@@ -95,3 +97,9 @@ workflows:
           requires:
               - lint
               - unit_test
+      - aws-ecs/deploy-service-update:
+          requires:
+            - aws-ecr/build-and-push-image
+          family: 'noboru-demo-react-service'
+          cluster-name: 'noboru-demo-php'
+          container-image-name-updates: 'container=noboru-demo-php-service,tag=${CIRCLE_SHA1}'
