@@ -99,6 +99,7 @@ workflows:
           cluster-name: 'noboru-demo-php'
           service-name: 'noboru-demo-react-service'
           container-image-name-updates: 'container=web,tag=latest'
+          force-new-deployment: true
           requires:
             - aws-ecr/build-and-push-image
 
