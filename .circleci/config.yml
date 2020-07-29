@@ -64,5 +64,8 @@ workflows:
           image: kurumai/$CIRCLE_PROJECT_REPONAME
           registry: "docker.io"
           remote-docker-dlc: true
-          tag: $CIRCLE_SHA1
+          tag: $CIRCLE_SHA1, latest
+          requires:
+            - lint
+            - unit_test
 
