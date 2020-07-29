@@ -122,9 +122,7 @@ workflows:
       - docker/publish:
           image: kurumai/$CIRCLE_PROJECT_REPONAME
           registry: "docker.io"
-          executor:
-            docker/machine:
-              dlc: true
+          cache_from: kurumai/$CIRCLE_PROJECT_REPONAME:latest
           tag: $CIRCLE_SHA1,"latest"
           requires:
             - lint
