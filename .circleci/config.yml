@@ -76,7 +76,7 @@ jobs:
           insecure-skip-tls-verify: true
           openshift-platform-version: 4.x
           password: $OPENSHIFT_PASSWORD
-          server-address: "console-openshift-console.apps.demo.openshift.kurumai.work"
+          server-address: "api.demo.openshift.kurumai.work:6443"
           username: $OPENSHIFT_USER
       - run:
           name: Create example k8s deployment yaml file
