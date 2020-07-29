@@ -65,7 +65,7 @@ jobs:
       - run:
           name: Test the cluster
           command: |
-            oc new-project myproject
+            oc new-project localclustertestproject
             oc new-app kurumai/circleci-demo-javascript-react-app:latest
             kubectl get services
 
