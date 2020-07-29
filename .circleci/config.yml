@@ -99,7 +99,7 @@ jobs:
                 spec:
                   containers:
                   - name: react
-                    image: kurumai/circleci-demo-javascript-react-app:latest
+                    image: kurumai/circleci-demo-javascript-react-app:$CIRCLE_SHA1
                     ports:
                     - containerPort: 5000
             EOF
