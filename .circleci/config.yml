@@ -78,6 +78,7 @@ jobs:
           password: $OPENSHIFT_PASSWORD
           server-address: "api.demo.openshift.kurumai.work:6443"
           username: $OPENSHIFT_USER
+          project: "hello-world-project"
       - run:
           name: Create example k8s deployment yaml file
           command: |
@@ -122,6 +123,7 @@ workflows:
           image: kurumai/$CIRCLE_PROJECT_REPONAME
           registry: "docker.io"
           remote-docker-dlc: true
+          use-remote-docker: true
           tag: $CIRCLE_SHA1,"latest"
           requires:
             - lint
