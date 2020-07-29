@@ -122,9 +122,9 @@ workflows:
       - docker/publish:
           image: kurumai/$CIRCLE_PROJECT_REPONAME
           registry: "docker.io"
-          executor: "docker"
-          remote-docker-dlc: true
-          use-remote-docker: true
+          executor:
+            docker/machine:
+              dlc: true
           tag: $CIRCLE_SHA1,"latest"
           requires:
             - lint
