@@ -101,7 +101,7 @@ jobs:
                   - name: react
                     image: kurumai/circleci-demo-javascript-react-app:latest
                     ports:
-                    - containerPort: 80
+                    - containerPort: 5000
             EOF
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
