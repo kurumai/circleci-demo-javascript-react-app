@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   docker: circleci/docker@1.3.0
+  redhat-openshift: circleci/redhat-openshift@0.2.0
 
 jobs:
   dependencies:
@@ -49,6 +50,62 @@ jobs:
       - store_test_results:
           path: test-results
 
+  create-local-cluster:
+    executor: redhat-openshift/machine-for-local-cluster
+    steps:
+      - redhat-openshift/create-local-cluster-with-oc:
+          skip-registry-check: true
+      - redhat-openshift/login-and-update-kubeconfig:
+          insecure-skip-tls-verify: true
+          openshift-platform-version: 4.x
+          password: password
+          server-address: 'https://127.0.0.1:8443'
+          username: dev1
+      - run:
+          name: Test the cluster
+          command: |
+            oc new-project myproject
+            oc new-app kurumai/circleci-demo-javascript-react-app:latest
+            kubectl get services
+
+  deploy_to_remote_openshift:
+    executor: redhat-openshift/default
+    steps:
+      - redhat-openshift/login-and-update-kubeconfig:
+          insecure-skip-tls-verify: true
+          openshift-platform-version: 4.x
+          password: $OPENSHIFT_PASSWORD
+          server-address: "console-openshift-console.apps.demo.openshift.kurumai.work"
+          username: $OPENSHIFT_USER
+      - run:
+          name: Create example k8s deployment yaml file
+          command: |
+            cat \<<- EOF > deployment.yaml
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: react-deployment
+            spec:
+              selector:
+                matchLabels:
+                  app: react
+              replicas: 2
+              template:
+                metadata:
+                  labels:
+                    app: react
+                spec:
+                  containers:
+                  - name: react
+                    image: kurumai/circleci-demo-javascript-react-app:latest
+                    ports:
+                    - containerPort: 80
+            EOF
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: deployment.yaml
+          resource-name: deployment/react-deployment
+
 workflows:
   version: 2
   service_update:
@@ -68,4 +125,10 @@ workflows:
           requires:
             - lint
             - unit_test
-
+      - create-local-cluster:
+          requires:
+            - docker/publish
+      - deploy_to_remote_openshift:
+          requires:
+            - docker/publish
+            
