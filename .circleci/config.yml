@@ -91,7 +91,7 @@ jobs:
               selector:
                 matchLabels:
                   app: react
-              replicas: 2
+              replicas: 3
               template:
                 metadata:
                   labels:
