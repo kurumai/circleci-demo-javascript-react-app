@@ -50,17 +50,6 @@ jobs:
       - store_test_results:
           path: test-results
 
-  deploy:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: Deploy to Heroku
-          command: git push -f https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_GIT}.git master:master
-
 workflows:
   version: 2
   service_update:
@@ -72,13 +61,6 @@ workflows:
       - unit_test:
           requires:
             - dependencies
-#      - deploy:
-#          filters:
-#            branches:
-#              only: master
-#          requires:
-#            - lint
-#            - unit_test
       - aws-ecr/build-and-push-image:
           account-url: AWS_ECR_ACCOUNT_URL
           aws-access-key-id: AWS_ACCESS_KEY_ID
