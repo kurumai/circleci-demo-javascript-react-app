@@ -62,7 +62,9 @@ workflows:
           requires:
             - dependencies
       - gcp-gcr/build-and-push-image:
-          context: noboru-sandbox
           image: circleci-demo-javascript-react-app
           registry-url: asia.gcr.io
+          requires:
+            - lint
+            - unit_test
 
