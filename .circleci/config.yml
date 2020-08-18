@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
-  aws-ecr: circleci/aws-ecr@6.8.2
-  aws-ecs: circleci/aws-ecs@1.2.0
+  gcp-gcr: circleci/gcp-gcr@0.8.0
+  spinnaker: circleci/spinnaker@0.3.1
 
 jobs:
   dependencies:
@@ -61,28 +61,8 @@ workflows:
       - unit_test:
           requires:
             - dependencies
-      - aws-ecr/build-and-push-image:
-          account-url: AWS_ECR_ACCOUNT_URL
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          region: AWS_REGION
-          repo: circleci-demo-javascript-react-app
-          executor:
-            name: aws-ecr/default
-            use-docker-layer-caching: true
-          filters:
-            branches:
-              only: dockerize
-          requires:
-              - lint
-              - unit_test
-      - aws-ecs/deploy-service-update:
-          family: 'noboru-demo-react'
-          cluster-name: 'noboru-demo-php'
-          service-name: 'noboru-demo-react-service'
-          container-image-name-updates: 'container=web,tag=latest'
-          force-new-deployment: true
-          requires:
-            - aws-ecr/build-and-push-image
+      - gcp-gcr/build-and-push-image:
+          context: noboru-sandbox
+          image: circleci-demo-javascript-react-app
+          registry-url: asia.gcr.io
 
-            
