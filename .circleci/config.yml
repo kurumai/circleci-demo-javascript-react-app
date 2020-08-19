@@ -58,6 +58,7 @@ jobs:
           cluster: spinnaker-1
           install-kubectl: true
           perform-login: true
+          google-compute-zone: GOOGLE_COMPUTE_ZONE_SPINNAKER
       - spinnaker/set-up-port-forwarding:
           namespace: kube-system
           wait: true
