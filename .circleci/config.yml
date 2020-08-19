@@ -56,7 +56,6 @@ jobs:
       - spinnaker/trigger-pipeline-with-webhook:
           payload: >-
             {""}
-          webhook-endpoint: https://spinnaker-1.endpoints.noboru-sandbox.cloud.goog/gate/webhooks/webhook/circleci
 
 workflows:
   version: 2
@@ -78,5 +77,5 @@ workflows:
       - deploy-with-spinnaker:
           requires:
             - gcp-gcr/build-and-push-image
-            
+
 
