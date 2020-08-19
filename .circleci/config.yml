@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   gcp-gcr: circleci/gcp-gcr@0.8.0
+  gcp-gke: circleci/gcp-gke@1.1.0
   spinnaker: circleci/spinnaker@0.3.1
 
 jobs:
@@ -53,6 +54,13 @@ jobs:
   deploy-with-spinnaker:
     executor: spinnaker/default-stretch
     steps:
+      - gcp-gke/update-kubeconfig-with-credentials:
+          cluster: app-cluster
+          install-kubectl: true
+          perform-login: true
+      - spinnaker/set-up-port-forwarding:
+          namespace: spinnaker
+          wait: true
       - spinnaker/trigger-pipeline-with-webhook:
           payload: >-
             {""}
@@ -61,21 +69,22 @@ workflows:
   version: 2
   service_update:
     jobs:
-      - dependencies
-      - lint:
-          requires:
-            - dependencies
-      - unit_test:
-          requires:
-            - dependencies
-      - gcp-gcr/build-and-push-image:
-          image: circleci-demo-javascript-react-app
-          registry-url: asia.gcr.io
-          requires:
-            - lint
-            - unit_test
-      - deploy-with-spinnaker:
-          requires:
-            - gcp-gcr/build-and-push-image
+      - deploy-with-spinnaker
+#      - dependencies
+#      - lint:
+#          requires:
+#            - dependencies
+#      - unit_test:
+#          requires:
+#            - dependencies
+#      - gcp-gcr/build-and-push-image:
+#          image: circleci-demo-javascript-react-app
+#          registry-url: asia.gcr.io
+#          requires:
+#            - lint
+#            - unit_test
+#      - deploy-with-spinnaker:
+#          requires:
+#            - gcp-gcr/build-and-push-image
 
 
