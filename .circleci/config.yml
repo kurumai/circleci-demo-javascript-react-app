@@ -60,7 +60,7 @@ jobs:
           perform-login: true
           google-compute-zone: GOOGLE_COMPUTE_ZONE_SPINNAKER
       - spinnaker/set-up-port-forwarding:
-          namespace: kube-system
+          namespace: spinnaker
           wait: true
       - spinnaker/trigger-pipeline-with-webhook:
           payload: >-
