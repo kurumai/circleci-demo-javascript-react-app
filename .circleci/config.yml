@@ -55,11 +55,11 @@ jobs:
     executor: spinnaker/default-stretch
     steps:
       - gcp-gke/update-kubeconfig-with-credentials:
-          cluster: app-cluster
+          cluster: spinnaker-1
           install-kubectl: true
           perform-login: true
       - spinnaker/set-up-port-forwarding:
-          namespace: spinnaker
+          namespace: kube-system
           wait: true
       - spinnaker/trigger-pipeline-with-webhook:
           payload: >-
