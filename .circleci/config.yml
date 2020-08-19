@@ -50,17 +50,13 @@ jobs:
       - store_test_results:
           path: test-results
 
-#  deploy-with-spinnaker:
-#    executor: spinnaker/default-stretch
-#    steps:
-#      - spinnaker/set-up-port-forwarding:
-#          namespace: spinnaker
-#          wait: true
-#      - spinnaker/trigger-pipeline-with-webhook:
-#          payload: >-
-#            {\"status\": \"success\", \"jobid\": \"$CIRCLE_WORKFLOW_JOB_ID\",
-#            \"message\": \"I've got it\"}
-#          webhook-endpoint: https://spinnaker-1.endpoints.noboru-sandbox.cloud.goog/gate/webhooks/webhook/circleci
+  deploy-with-spinnaker:
+    executor: spinnaker/default-stretch
+    steps:
+      - spinnaker/trigger-pipeline-with-webhook:
+          payload: >-
+            {""}
+          webhook-endpoint: https://spinnaker-1.endpoints.noboru-sandbox.cloud.goog/gate/webhooks/webhook/circleci
 
 workflows:
   version: 2
@@ -79,5 +75,8 @@ workflows:
           requires:
             - lint
             - unit_test
-          
+      - deploy-with-spinnaker:
+          requires:
+            - gcp-gcr/build-and-push-image
+            
 
