@@ -60,7 +60,7 @@ jobs:
 #          payload: >-
 #            {\"status\": \"success\", \"jobid\": \"$CIRCLE_WORKFLOW_JOB_ID\",
 #            \"message\": \"I've got it\"}
-#          webhook-endpoint: SPINNAKER_WEBHOOK
+#          webhook-endpoint: https://spinnaker-1.endpoints.noboru-sandbox.cloud.goog/gate/webhooks/webhook/circleci
 
 workflows:
   version: 2
