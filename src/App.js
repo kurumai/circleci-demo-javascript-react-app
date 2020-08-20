@@ -20,7 +20,7 @@ class App extends Component {
 
   // Baby Hippo Gram
   // National Park Gram
-  title = '"National Park Gram"';
+  title = '"Baby Hippo Gram"';
 
   state = {
       cards: []
