@@ -73,4 +73,6 @@ workflows:
           deployment: circleci-demo-javascript-react-app
           image: asia.gcr.io/noboru-sandbox/circleci-demo-javascript-react-app
           tag: $CIRCLE_SHA1
+          requires:
+            - gcp-gcr/build-and-push-image
 
