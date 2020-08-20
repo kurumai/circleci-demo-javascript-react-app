@@ -2,7 +2,6 @@ version: 2.1
 orbs:
   gcp-gcr: circleci/gcp-gcr@0.8.0
   gcp-gke: circleci/gcp-gke@1.1.0
-  spinnaker: circleci/spinnaker@0.3.1
 
 jobs:
   dependencies:
@@ -51,41 +50,28 @@ jobs:
       - store_test_results:
           path: test-results
 
-  deploy-with-spinnaker:
-    executor: spinnaker/default-stretch
-    steps:
-      - gcp-gke/update-kubeconfig-with-credentials:
-          cluster: spinnaker-1
-          install-kubectl: true
-          perform-login: true
-          google-compute-zone: GOOGLE_COMPUTE_ZONE_SPINNAKER
-      - spinnaker/set-up-port-forwarding:
-          namespace: spinnaker
-          wait: true
-      - spinnaker/trigger-pipeline-with-webhook:
-          payload: >-
-            {}
-
 workflows:
   version: 2
   service_update:
     jobs:
       - deploy-with-spinnaker
-#      - dependencies
-#      - lint:
-#          requires:
-#            - dependencies
-#      - unit_test:
-#          requires:
-#            - dependencies
-#      - gcp-gcr/build-and-push-image:
-#          image: circleci-demo-javascript-react-app
-#          registry-url: asia.gcr.io
-#          requires:
-#            - lint
-#            - unit_test
-#      - deploy-with-spinnaker:
-#          requires:
-#            - gcp-gcr/build-and-push-image
-
+      - dependencies
+      - lint:
+          requires:
+            - dependencies
+      - unit_test:
+          requires:
+            - dependencies
+      - gcp-gcr/build-and-push-image:
+          image: circleci-demo-javascript-react-app
+          registry-url: asia.gcr.io
+          requires:
+            - lint
+            - unit_test
+      - gcp-gke/publish-and-rollout-image:
+          cluster: app-cluster
+          container: circleci-demo-javascript-react-app
+          deployment: circleci-demo-javascript-react-app
+          image: asia.gcr.io/noboru-sandbox/circleci-demo-javascript-react-app
+          tag: $CIRCLE_SHA1
 
