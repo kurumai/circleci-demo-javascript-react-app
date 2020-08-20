@@ -65,7 +65,7 @@ workflows:
           cluster: app-cluster
           container: circleci-demo-javascript-react-app
           deployment: circleci-demo-javascript-react-app
-          image: noboru-sandbox/circleci-demo-javascript-react-app
+          image: circleci-demo-javascript-react-app
           tag: $CIRCLE_SHA1
           requires:
             - lint
