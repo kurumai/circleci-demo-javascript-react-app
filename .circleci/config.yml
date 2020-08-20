@@ -64,7 +64,7 @@ jobs:
           wait: true
       - spinnaker/trigger-pipeline-with-webhook:
           payload: >-
-            {""}
+            {}
 
 workflows:
   version: 2
