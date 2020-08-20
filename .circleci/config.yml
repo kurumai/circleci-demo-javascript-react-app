@@ -61,12 +61,6 @@ workflows:
       - unit_test:
           requires:
             - dependencies
-#      - gcp-gcr/build-and-push-image:
-#          image: circleci-demo-javascript-react-app
-#          registry-url: asia.gcr.io
-#          requires:
-#            - lint
-#            - unit_test
       - gcp-gke/publish-and-rollout-image:
           cluster: app-cluster
           container: circleci-demo-javascript-react-app
@@ -74,7 +68,6 @@ workflows:
           image: noboru-sandbox/circleci-demo-javascript-react-app
           tag: $CIRCLE_SHA1
           requires:
-#            - gcp-gcr/build-and-push-image
             - lint
             - unit_test
 
