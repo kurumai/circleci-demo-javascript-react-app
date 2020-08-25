@@ -70,4 +70,7 @@ workflows:
           requires:
             - lint
             - unit_test
+          filters:
+            branches:
+              only: gcr-gke
 
