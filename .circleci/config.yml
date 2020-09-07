@@ -56,11 +56,14 @@ jobs:
       - image: circleci/python:3.7.1
     steps:
       - aws-cli/install
-      - aws-cli/setup
-      - aws-ecs/update-service:
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID_STAGING
+          aws-region	: AWS_DEFAULT_REGION_STAGING
+          aws-secret-access-key	: AWS_SECRET_ACCESS_KEY_STAGING
+      - aws-ecs/update-service: 
           family: 'noboru-demo-react'
-          cluster-name: 'noboru-demo-php'
-          service-name: 'noboru-demo-react-service'
+          cluster-name: 'noboru-demo-staging'
+          service-name: 'noboru-demo-react-service-staging'
           container-image-name-updates: 'container=web,tag=latest'
           force-new-deployment: true
 
@@ -76,6 +79,7 @@ jobs:
           service-name: 'noboru-demo-react-service'
           container-image-name-updates: 'container=web,tag=latest'
           force-new-deployment: true
+          AWS_REGION
 
 workflows:
   version: 2
