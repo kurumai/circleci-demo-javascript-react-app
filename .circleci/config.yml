@@ -57,7 +57,7 @@ jobs:
     steps:
       - aws-cli/install
       - aws-cli/setup
-      - aws-ecs/deploy-service-update:
+      - aws-ecs/update-service:
           family: 'noboru-demo-react'
           cluster-name: 'noboru-demo-php'
           service-name: 'noboru-demo-react-service'
@@ -70,7 +70,7 @@ jobs:
     steps:
       - aws-cli/install
       - aws-cli/setup
-      - aws-ecs/deploy-service-update:
+      - aws-ecs/update-service:
           family: 'noboru-demo-react'
           cluster-name: 'noboru-demo-php'
           service-name: 'noboru-demo-react-service'
