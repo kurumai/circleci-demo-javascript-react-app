@@ -50,6 +50,32 @@ jobs:
       - store_test_results:
           path: test-results
 
+  deploy-to-staging:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - aws-cli/install
+      - aws-cli/configure:
+      - aws-ecs/deploy-service-update:
+          family: 'noboru-demo-react'
+          cluster-name: 'noboru-demo-php'
+          service-name: 'noboru-demo-react-service'
+          container-image-name-updates: 'container=web,tag=latest'
+          force-new-deployment: true
+          
+  deploy-to-prodction:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - aws-cli/install
+      - aws-cli/configure:
+      - aws-ecs/deploy-service-update:
+          family: 'noboru-demo-react'
+          cluster-name: 'noboru-demo-php'
+          service-name: 'noboru-demo-react-service'
+          container-image-name-updates: 'container=web,tag=latest'
+          force-new-deployment: true
+
 workflows:
   version: 2
   service_update:
@@ -72,17 +98,21 @@ workflows:
             use-docker-layer-caching: true
           filters:
             branches:
-              only: dockerize
+              only: dockerize-multistage*
           requires:
               - lint
               - unit_test
-      - aws-ecs/deploy-service-update:
-          family: 'noboru-demo-react'
-          cluster-name: 'noboru-demo-php'
-          service-name: 'noboru-demo-react-service'
-          container-image-name-updates: 'container=web,tag=latest'
-          force-new-deployment: true
+      - deploy-to-staging:
           requires:
             - aws-ecr/build-and-push-image
+          filters:
+            branches:
+              only: dockerize-multistage-staging
+      - deploy-to-prodction:
+          requires:
+            - aws-ecr/build-and-push-image
+          filters:
+            branches:
+              only: dockerize-multistage
 
             
