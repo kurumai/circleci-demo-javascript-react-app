@@ -99,7 +99,7 @@ workflows:
             use-docker-layer-caching: true
           filters:
             branches:
-              only: dockerize-multistage*
+              only: /dockerize-multistage*/
           requires:
               - lint
               - unit_test
