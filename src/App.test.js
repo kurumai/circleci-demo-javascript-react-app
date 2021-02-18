@@ -9,7 +9,7 @@ it('renders without crashing', () => {
 });
 
 test('header title', () => {
-  expect((new App).title).toBe('"National Park Gram"')
+  expect((new App).title).toBe('"Cars Gram"')
 })
 
 
