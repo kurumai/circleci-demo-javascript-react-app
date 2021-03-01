@@ -8,7 +8,7 @@ const Cards = ({ cards }) => {
         <div className="row">
        {cards.map((card) => (
             <span key={card.id}>
-                { card.data.crosspost_parent == null && card.data.media == null ? 
+                { card.data.crosspost_parent == null && card.data.media == null && card.data.url.test(/^.*\.jpg$/)? 
                 <div className="card mb-4">
                     <img src={ card.data.url } alt="" width="400px" height="300px"/>
                 </div>
