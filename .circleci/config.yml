@@ -66,7 +66,7 @@ workflows:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           region: AWS_REGION
-          repo: circleci-demo-javascript-react-app
+          repo: noboru-circleci-demo-javascript-react-app
           executor:
             name: aws-ecr/default
             use-docker-layer-caching: true
@@ -78,7 +78,7 @@ workflows:
               - unit_test
       - aws-ecs/deploy-service-update:
           family: 'noboru-demo-react'
-          cluster-name: 'noboru-demo-php'
+          cluster-name: 'noboru-demo'
           service-name: 'noboru-demo-react-service'
           container-image-name-updates: 'container=web,tag=latest'
           force-new-deployment: true
