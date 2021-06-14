@@ -78,7 +78,7 @@ workflows:
               - unit_test
       - aws-ecs/deploy-service-update:
           family: 'noboru-demo-react'
-          cluster-name: 'noboru-demo'
+          cluster-name: 'noboru-demo-ecs'
           service-name: 'noboru-demo-react-service'
           container-image-name-updates: 'container=web,tag=latest'
           force-new-deployment: true
